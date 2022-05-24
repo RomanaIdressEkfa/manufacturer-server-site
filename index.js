@@ -17,7 +17,7 @@ async function run() {
         await client.connect();
         const productCollection = client.db("test").collection("devices");
 
-        // get inventory from db
+        // get product from db
         app.get('/products', async (req, res) => {
             const query = {};
             const cursor = productCollection.find(query);
