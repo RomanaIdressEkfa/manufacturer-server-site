@@ -32,11 +32,11 @@ async function run() {
             res.send(result);
         });
 
-        // app.get('/reviews', async (req, res) => {
-        //     const query = {};
-        //     const reviews = await reviewCollection.find(query).toArray();
-        //     res.send(reviews)
-        // })
+        app.get('/reviews', async (req, res) => {
+            const query = {};
+            const reviews = await reviewCollection.find(query).toArray();
+            res.send(reviews)
+        })
 
     }
 
