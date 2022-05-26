@@ -1,8 +1,6 @@
 const express = require('express')
 const cors = require('cors');
-
-const { MongoClient, ServerApiVersion } = require('mongodb');
-// const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 const app = express()
 const port = process.env.PORT || 5000
@@ -37,6 +35,17 @@ async function run() {
             const reviews = await reviewCollection.find(query).toArray();
             res.send(reviews)
         })
+        app.get('/product/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: ObjectId(id) };
+            const product = await productCollection.findOne(query)
+            res.send(product)
+        })
+        app.post('/product', async (req, res) => {
+            const product = req.body;
+            const result = await productCollection.insertOne(product);
+            res.send(result);
+        });
 
     }
 
@@ -79,12 +88,7 @@ async function run() {
     //             res.send(products)
     //         })
 
-    //         app.get('/product/:id', async (req, res) => {
-    //             const id = req.params.id;
-    //             const query = { _id: ObjectId(id) };
-    //             const product = await productCollenction.findOne(query)
-    //             res.send(product)
-    //         })
+
 
     //         app.put('/user/:email', async (req, res) => {
     //             const email = req.params.email;
@@ -205,11 +209,7 @@ async function run() {
     //             res.send(result);
     //         })
 
-    //         app.post('/product', verifyJWT, async (req, res) => {
-    //             const product = req.body;
-    //             const result = await productCollenction.insertOne(product);
-    //             res.send(result);
-    //         });
+
 
     //         app.put('/product/:id', async (req, res) => {
     //             const id = req.params.id;
