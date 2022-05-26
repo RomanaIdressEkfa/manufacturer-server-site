@@ -15,6 +15,7 @@ async function run() {
         await client.connect();
         const productCollection = client.db("test").collection("devices");
         const reviewCollection = client.db("test").collection("reviews");
+        const orderCollection = client.db("test").collection("orders");
 
         // get product from db
         app.get('/products', async (req, res) => {
@@ -44,6 +45,11 @@ async function run() {
         app.post('/product', async (req, res) => {
             const product = req.body;
             const result = await productCollection.insertOne(product);
+            res.send(result);
+        });
+        app.post('/order', async (req, res) => {
+            const order = req.body;
+            const result = await orderCollection.insertOne(order);
             res.send(result);
         });
 
@@ -87,8 +93,6 @@ async function run() {
     //             const products = await productCollenction.find(query).toArray();
     //             res.send(products)
     //         })
-
-
 
     //         app.put('/user/:email', async (req, res) => {
     //             const email = req.params.email;
@@ -141,11 +145,7 @@ async function run() {
     //         })
 
 
-    //         app.post('/order', verifyJWT, async (req, res) => {
-    //             const order = req.body;
-    //             const result = await orderCollenction.insertOne(order);
-    //             res.send(result);
-    //         });
+
 
     //         app.get('/orders', verifyJWT, async (req, res) => {
     //             const email = req.query.email;
